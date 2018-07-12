@@ -1,17 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import OpenSearch from './OpenSearch';
+import * as BooksAPI from "./BooksAPI";
+import Book from './Book'
 
 class BookShelves extends Component {
   static propTypes = {
     books: PropTypes.array.isRequired
   }
 
+  // selectShelf() {
+  //   let selectEl = document.getElementsByTagName('option')
+  //   (selectEl.val() === book.shelf) && selectEl.setAttribute('selected');
+  // }
+
   render() {
     const { books } = this.props
 
-    return (
-      <div className="list-books">
+    return <div className="list-books">
         <div className="list-books-title">
           <h1>MyReads</h1>
         </div>
@@ -21,30 +27,8 @@ class BookShelves extends Component {
             <h2 className="bookshelf-title">Currently Reading</h2>
             <div className="bookshelf-books">
               <ol className="books-grid">
-                {books.map(book =>
-                (book.shelf === 'wantToRead') && 
-                  <li key={book.id}>
-                    <div className="book">
-                      <div className="book-top">
-                        <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }} />
-                        <div className="book-shelf-changer">
-                          <select>
-                          <option value="move" disabled>
-                              Move to...
-                            </option>
-                          <option value="currentlyReading">
-                              Currently Reading
-                            </option>
-                          <option value="wantToRead">Want to Read</option>
-                          <option value="read">Read</option>
-                          <option value="none">None</option>
-                          </select>
-                        </div>
-                        </div>
-                        <div className="book-title">{book.title}</div>
-                      <div className="book-authors">{book.authors}</div>
-                    </div>
-                  </li>
+                {books.map(book => book.shelf === "wantToRead" && 
+                  <Book book={book}/>
                 )}
               </ol>
             </div>
@@ -52,73 +36,28 @@ class BookShelves extends Component {
 
           <div className="bookshelf">
             <h2 className="bookshelf-title">Want To Read</h2>
-              <div className="bookshelf-books">
-                <ol className="books-grid">
-                  {books.map(book =>
-                    (book.shelf === 'currentlyReading') && 
-                      <li key={book.id}>
-                        <div className="book">
-                          <div className="book-top">
-                            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }} />
-                            <div className="book-shelf-changer">
-                              <select>
-                              <option value="move" disabled>
-                                  Move to...
-                              </option>
-                              <option value="currentlyReading">
-                                  Currently Reading
-                              </option>
-                              <option value="wantToRead">Want to Read</option>
-                              <option value="read">Read</option>
-                              <option value="none">None</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div className="book-title">{book.title}</div>
-                          <div className="book-authors">{book.authors}</div>
-                        </div>
-                      </li>
-                    )}
-                </ol>
+            <div className="bookshelf-books">
+              <ol className="books-grid">
+                {books.map(book => book.shelf === "currentlyReading" && 
+                  <Book book={book} />
+                )}
+              </ol>
             </div>
           </div>
 
           <div className="bookshelf">
-              <h2 className="bookshelf-title">Read</h2>
-                <div className="bookshelf-books">
-                  <ol className="books-grid">
-                    {books.map(book =>
-                      (book.shelf === 'read') && 
-                  <li key={book.id}>
-                    <div className="book">
-                      <div className="book-top">
-                        <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }} />
-                        <div className="book-shelf-changer">
-                          <select>
-                            <option value="move" disabled>
-                                Move to...
-                            </option>
-                            <option value="currentlyReading">
-                                Currently Reading
-                            </option>
-                            <option value="wantToRead">Want to Read</option>
-                            <option value="read">Read</option>
-                            <option value="none">None</option>
-                          </select>
-                        </div>
-                    </div>
-                    <div className="book-title">{book.title}</div>
-                    <div className="book-authors">{book.authors}</div>
-                  </div>
-                </li>
-              )}
-            </ol>
+            <h2 className="bookshelf-title">Read</h2>
+            <div className="bookshelf-books">
+              <ol className="books-grid">
+                {books.map(book => book.shelf === "read" && 
+                  <Book book={book} />
+                )}
+              </ol>
+            </div>
           </div>
-        </div>
         <OpenSearch />
       </div>
-    </div>
-    )
+    </div>;
   }
 }
 
