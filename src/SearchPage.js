@@ -6,18 +6,17 @@ import * as BooksAPI from "./BooksAPI";
 class SearchPage extends Component {
   state = {
     search: '',
-    newBooks: ''
+    newBooks: []
   };
 
-  updateSearch = search => {
-    this.setState({ search: search.trim() });
-  };
+  // failedSearch = search => {
+  //   this.setState({ search: search.trim() });
+  // };
 
   showResults = () => {
     BooksAPI.search(this.state.search).then(searched => {
       this.setState({ newBooks: searched })
-    })
-    console.log('s')
+    }).catch(this.setState({ newBooks: []}))
   };
 
   handleChange = event => {
