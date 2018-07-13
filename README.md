@@ -4,10 +4,10 @@ This is a single-page app for you to keep track of the books you read. There are
 
 ## This app uses:
 
-*JavaScipt
-*HTML
-*CSS
-*ReactJS
+* JavaScipt
+* HTML
+* CSS
+* ReactJS
 
 ## To start the App:
 
