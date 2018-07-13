@@ -9,6 +9,7 @@ import SearchPage from './SearchPage';
 class BooksApp extends Component {
   state = {
     books: [],
+    newBooks : []
   }
 
   componentDidMount() {
@@ -30,11 +31,34 @@ class BooksApp extends Component {
     });
   };
 
+  showResults = (search) => {
+    if (search) {
+      BooksAPI.search(search).then((books) => {
+        if (books.length) {
+          books.forEach((book, index) => {
+            let aBook = this.state.books.find((b) => b.id === book.id);
+            book.shelf = aBook ? aBook.shelf : 'none';
+            books[index] = book;
+          })
+
+          this.setState({
+            newBooks: books
+          })
+        }
+
+      })
+    } else {
+      this.setState({
+        newBooks: []
+      })
+    }
+  };
+
   render() {
     return <div className="app">
         <Route exact path="/" render={() => <BookShelves books={this.state.books} changeShelf={this.changeShelf} />} />
 
-        <Route path="/search" render={() => <SearchPage changeShelf={this.changeShelf} />} />
+        <Route path="/search" render={() => <SearchPage books={this.state.newBooks} changeShelf={this.changeShelf} showResults={this.showResults}/>} />
       </div>;
   }
 }

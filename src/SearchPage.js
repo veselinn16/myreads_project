@@ -1,29 +1,12 @@
-import React, { Component } from 'react';
-import { Link } from "react-router-dom";
-import * as BooksAPI from "./BooksAPI";
+import React, { Component } from 'react'
+import { Link } from "react-router-dom"
 import Book from './Book'
 
 
 class SearchPage extends Component {
-  state = {
-    search: '',
-    newBooks: []
-  };
-
-  // failedSearch = search => {
-  //   this.setState({ search: search.trim() });
-  // };
-
-  showResults = () => {
-    BooksAPI.search(this.state.search).then(searched => {
-      this.setState({ newBooks: searched })
-    }).catch(this.setState({ newBooks: []}))
-  };
-
-  handleChange = event => {
-    this.setState({ search: event.target.value });
-    this.showResults();
-  };
+  showResults = (search) => {
+    this.props.showResults(search.trim())
+  }
 
   render() {
     return (
@@ -36,8 +19,7 @@ class SearchPage extends Component {
             <input
               type="text"
               placeholder="Search by title or author"
-              value={this.state.search}
-              onChange={this.handleChange}
+              onChange={(event) => this.showResults(event.target.value)}
             />
           </div>
         </div>
@@ -47,19 +29,18 @@ class SearchPage extends Component {
               <h2 className="bookshelf-title">Search Results</h2>
               <div className="bookshelf-books">
                 <ol className="books-grid">
-                {(this.state.newBooks) &&
-                  (this.state.newBooks.map(book =>
+                {this.props.books.map(book =>
                     <li key={book.id}>
                       <Book book={book} changeShelf={this.props.changeShelf}/>
                     </li>
-                  ))}
+                  )}
                 </ol>
               </div>
             </div>
           </ol>
         </div>
       </div>
-    );
+    )
   }
 }
 
