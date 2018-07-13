@@ -31,17 +31,11 @@ class BooksApp extends Component {
   };
 
   render() {
-    return (
-      <div className="app">
-        <Route exact path='/' render={() => (
-          <BookShelves books={this.state.books} changeShelf={this.changeShelf}/>
-        )}/>
-        
-        <Route path='/search' render={() => (
-          <SearchPage/>
-        )}/>
-      </div>
-    )
+    return <div className="app">
+        <Route exact path="/" render={() => <BookShelves books={this.state.books} changeShelf={this.changeShelf} />} />
+
+        <Route path="/search" render={() => <SearchPage changeShelf={this.changeShelf} />} />
+      </div>;
   }
 }
 
