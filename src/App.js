@@ -17,11 +17,24 @@ class BooksApp extends Component {
     })
   }
 
+  changeShelf = (book, newShelf) => {
+    BooksAPI.update(book, newShelf).then(() => {
+      // Update the local copy of the book
+      book.shelf = newShelf;
+
+      // Filter out the book and append it to the end of the list
+      // so it appears at the end of whatever shelf it was added to.
+      this.setState(state => ({
+        books: state.books.filter(b => b.id !== book.id).concat([book])
+      }));
+    });
+  };
+
   render() {
     return (
       <div className="app">
         <Route exact path='/' render={() => (
-          <BookShelves books={this.state.books} />
+          <BookShelves books={this.state.books} changeShelf={this.changeShelf}/>
         )}/>
         
         <Route path='/search' render={() => (
