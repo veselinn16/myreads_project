@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import OpenSearch from './OpenSearch';
-import * as BooksAPI from "./BooksAPI";
 import Book from './Book'
 
 class BookShelves extends Component {
@@ -27,8 +26,10 @@ class BookShelves extends Component {
             <h2 className="bookshelf-title">Currently Reading</h2>
             <div className="bookshelf-books">
               <ol className="books-grid">
-                {books.map(book => book.shelf === "wantToRead" && 
-                  <Book book={book}/>
+                {books.map(book => book.shelf ===  'currentlyReading' && 
+                <li key={book.id}>
+                  <Book book={book} shelf={book.shelf} />
+                </li>
                 )}
               </ol>
             </div>
@@ -38,8 +39,10 @@ class BookShelves extends Component {
             <h2 className="bookshelf-title">Want To Read</h2>
             <div className="bookshelf-books">
               <ol className="books-grid">
-                {books.map(book => book.shelf === "currentlyReading" && 
-                  <Book book={book} />
+                {books.map(book => book.shelf ===    'wantToRead' &&
+                  <li key={book.id}> 
+                    <Book book={book} shelf={book.shelf}/>
+                  </li>
                 )}
               </ol>
             </div>
@@ -50,7 +53,9 @@ class BookShelves extends Component {
             <div className="bookshelf-books">
               <ol className="books-grid">
                 {books.map(book => book.shelf === "read" && 
-                  <Book book={book} />
+                <li key={book.id}>
+                  <Book book={book} shelf={book.shelf} />
+                </li>
                 )}
               </ol>
             </div>
