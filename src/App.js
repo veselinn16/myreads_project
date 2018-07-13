@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import { Route } from 'react-router-dom';
+import { Route } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
-import BookShelves from './BookShelves';
-import SearchPage from './SearchPage';
-
+import BookShelves from './BookShelves'
+import SearchPage from './SearchPage'
 
 class BooksApp extends Component {
   state = {
@@ -20,46 +19,42 @@ class BooksApp extends Component {
 
   changeShelf = (book, newShelf) => {
     BooksAPI.update(book, newShelf).then(() => {
-      // Update the local copy of the book
-      book.shelf = newShelf;
+      book.shelf = newShelf
 
-      // Filter out the book and append it to the end of the list
-      // so it appears at the end of whatever shelf it was added to.
+      // Filter book and put it at the end of selected shelf
       this.setState(state => ({
         books: state.books.filter(b => b.id !== book.id).concat([book])
-      }));
-    });
-  };
+      }))
+    })
+  }
 
   showResults = (search) => {
     if (search) {
       BooksAPI.search(search).then((books) => {
         if (books.length) {
           books.forEach((book, index) => {
-            let aBook = this.state.books.find((b) => b.id === book.id);
+            let aBook = this.state.books.find((b) => b.id === book.id)
             book.shelf = aBook ? aBook.shelf : 'none';
-            books[index] = book;
+            books[index] = book
           })
-
           this.setState({
             newBooks: books
           })
         }
-
       })
     } else {
       this.setState({
         newBooks: []
       })
     }
-  };
+  }
 
   render() {
     return <div className="app">
         <Route exact path="/" render={() => <BookShelves books={this.state.books} changeShelf={this.changeShelf} />} />
 
         <Route path="/search" render={() => <SearchPage books={this.state.newBooks} changeShelf={this.changeShelf} showResults={this.showResults}/>} />
-      </div>;
+      </div>
   }
 }
 

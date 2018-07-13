@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 class Book extends Component {
   state = {
-    shelf: this.props.book.shelf,
+    shelf: this.props.book.shelf
   }
 
   updateBookshelf = (event) => {
@@ -11,7 +11,7 @@ class Book extends Component {
   }
 
   render() {
-    const { book } = this.props;
+    const { book } = this.props
 
     return (
       <div className="book">
@@ -39,7 +39,7 @@ class Book extends Component {
         <div className="book-title">{book.title}</div>
         <div className="book-authors">{book.authors}</div>
       </div>
-    );
+    )
   }
 }
 

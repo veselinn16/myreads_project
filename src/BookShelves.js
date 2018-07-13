@@ -1,17 +1,12 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import OpenSearch from './OpenSearch';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import OpenSearch from './OpenSearch'
 import Book from './Book'
 
 class BookShelves extends Component {
   static propTypes = {
     books: PropTypes.array.isRequired
   }
-
-  // selectShelf() {
-  //   let selectEl = document.getElementsByTagName('option')
-  //   (selectEl.val() === book.shelf) && selectEl.setAttribute('selected');
-  // }
 
   render() {
     const { books } = this.props
@@ -62,7 +57,7 @@ class BookShelves extends Component {
           </div>
         <OpenSearch />
       </div>
-    </div>;
+    </div>
   }
 }
 
