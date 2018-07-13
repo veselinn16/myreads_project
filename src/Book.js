@@ -2,12 +2,22 @@ import React, { Component } from 'react'
 
 class Book extends Component {
   state = {
-    shelf: this.props.book.shelf
+    shelf: this.props.book.shelf,
+    updating: false
   }
 
   updateBookshelf = (event) => {
     this.props.changeShelf(this.props.book, event.target.value);
-    this.setState({ shelf: event.target.value })
+    this.setState({ 
+      shelf: event.target.value,
+      updating: true
+    })
+  }
+
+  componentWillReceiveProps() {
+    this.setState({
+      updating: false
+    })
   }
 
   render() {
@@ -34,6 +44,7 @@ class Book extends Component {
               <option value="read">Read</option>
               <option value="none">None</option>
             </select>
+            {this.state.updating && (<div className="loader"></div>)}
           </div>
         </div>
         <div className="book-title">{book.title}</div>
